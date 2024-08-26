@@ -1,58 +1,61 @@
 /**
- * 
- * Manipulating the DOM exercise.
- * Exercise programmatically builds navigation,
- * scrolls to anchors from navigation,
- * and highlights section in viewport upon scrolling.
- * 
- * Dependencies: None
- * 
- * JS Version: ES2015/ES6
- * 
- * JS Standard: ESlint
- * 
-*/
-
-/**
  * Define Global Variables
- * 
-*/
-
-const sectionList = {};
-
-/**
- * End Global Variables
- * Start Helper Functions
- * 
-*/
+ */
+const navbarMenu = document.querySelector('.navbar__menu');
+const navbarList = document.querySelector('#navbar__list');
 
 /**
-* @description Get all sections for nav list
-* @method listSections
-* @returns {Object} sectionList
-*/
+ * @description Add hamburger (bars) on screen resize
+ * @method addHamburger
+ * @returns null
+ */
+function addHamburger() {
+  const hamburger = document.createElement('i');
+  hamburger.classList.add('fa-solid', 'fa-bars', 'hamburger');
+  hamburger.setAttribute('aria-hidden', 'true');
+  navbarMenu.insertBefore(hamburger, navbarList);
+  hamburger.addEventListener('click', function () {
+    navbarList.classList.toggle('show');
+  });
+}
+
+/**
+ * @description Deal with nav changes for small screen sizes
+ * @method handleResize
+ * @returns null
+ */
+function handleResize() {
+  const screenWidth = window.innerWidth;
+  const existingHamburger = document.querySelector('.hamburger');
+  if (screenWidth > 700) {
+    if (existingHamburger) {
+      existingHamburger.remove();
+    }
+    navbarList.classList.remove('show');
+    navbarList.style.display = 'block';
+  } else {
+    if (!existingHamburger) {
+      addHamburger();
+    }
+    navbarList.style.display = 'none';
+  }
+}
+
+/**
+ * @description Get all sections for nav list
+ * @method listSections
+ * @returns {Object} sectionList
+ */
 const listSections = () => {
   const sections = document.querySelectorAll('section[id]');
-  const sectionList = {}; // Initialize the sectionList object
-
+  const sectionList = {};
   sections.forEach((section) => {
     const sectionId = section.id;
     const sectionName = section.getAttribute('data-nav');
-
-    // Use the section ID as the key and the section name as the value
     sectionList[sectionId] = sectionName;
   });
-
-  console.log(sectionList); // Log the sectionList for debugging
-  return sectionList; // Return the sectionList object
+  return sectionList;
 };
-
-
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
-*/
 
 /**
  * @description Build the navigation menu dynamically
@@ -61,72 +64,66 @@ const listSections = () => {
  */
 const buildNavMenu = () => {
   const navList = document.getElementById('navbar__list');
-  const sections = listSections(); // This now returns an object with { "sectionId": "Section Name" }
-
-  // Iterate over the entries (key-value pairs) in the sections object
+  const sections = listSections();
   for (const [sectionId, sectionName] of Object.entries(sections)) {
     let listItem = document.createElement('li');
     let anchorTag = document.createElement('a');
-    
-    // Set the anchor text and href attribute
     anchorTag.innerHTML = sectionName;
     anchorTag.href = `#${sectionId}`;
     anchorTag.classList.add('menu__link');
-
-    // Append the anchor tag to the list item, and the list item to the nav list
     listItem.appendChild(anchorTag);
     navList.appendChild(listItem);
   }
-}
-
+};
 
 /**
-* @description Add class 'active' to section when near top of viewport
-* @method setActiveSection
-* @returns null
-*/
+ * @description Add class 'active' to section when near top of viewport
+ * @method setActiveSection
+ * @returns null
+ */
 const setActiveSection = () => {
   const sections = document.querySelectorAll('section');
-
   sections.forEach(section => {
-      const topDistance = section.getBoundingClientRect().top;
-
-      if (topDistance > 0 && topDistance < 100){
-        section.classList.add('active');
-      } else {
-        section.classList.remove('active');
-      }
+    const topDistance = section.getBoundingClientRect().top;
+    if (topDistance > 0 && topDistance < 150) {
+      section.classList.add('active');
+    } else {
+      section.classList.remove('active');
+    }
   });
-}
+};
 
 /**
-* @description Scroll to anchor ID using scrollIntoView event
-* @method scrollToId
-* @returns null
-*/
+ * @description Scroll to anchor ID using scrollIntoView event
+ * @method scrollToId
+ * @returns null
+ */
 const scrollToId = (ID) => {
   const section = document.getElementById(ID);
-  
   section.scrollIntoView({ behavior: 'smooth' });
-}
+};
 
 /**
- * End Main Functions
- * Begin Events
- * 
-*/
+ * Events
+ */
 
-// Build menu when the page loads
-window.onload = buildNavMenu;
+// Build menu when the page loads and modify nav for small screens 
+window.onload = () => {
+  buildNavMenu();
+  handleResize();
+};
 
 // Scroll to section on link click
 document.getElementById('navbar__list').addEventListener('click', e => {
   if (e.target.tagName === 'A') {
-    e.preventDefault(); // Prevent default anchor click behavior
-    const sectionID = e.target.getAttribute('href').substring(1); // Extract the section ID
+    e.preventDefault();
+    const sectionID = e.target.getAttribute('href').substring(1);
     scrollToId(sectionID);
   }
 });
 
 // Set sections as active on scroll
 window.addEventListener('scroll', setActiveSection);
+
+// Show hamburger nav on smaller screens
+window.addEventListener('resize', handleResize);

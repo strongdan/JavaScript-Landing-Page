@@ -1,9 +1,12 @@
-# Landing Page Project
+# Example Ipsum Landing Page
 
-## Instructions
+## Examples of alternative lorem ipsum text, including the following:
+* [Pirate Ipsum](https://pirateipsum.me/)
+* [Zombie Ipsum](http://www.zombieipsum.com/)
+* [Bob Dylan Ipsum](https://brody.fyi/tools/dylan-ipsum)
+* [Coffee Ipsum](http://coffeeipsum.com/)
 
-The starter project has some HTML and CSS styling to display a static version of the Landing Page project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
-
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the Udacity Classroom.
+- Navbar and nav links are generated dynamically using JavaScript
+- Nav links allow user to scroll to sections
+- Page and navbar are responsive
+- Sections at top of viewport are active (displayed bold)
