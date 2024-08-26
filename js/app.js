@@ -17,10 +17,8 @@
  * Define Global Variables
  * 
 */
-//const sectionOne = document.getElementById('section1');
-//const sectionTwo = document.getElementById('section2');
-//const sectionThree = document.getElementById('section3');
-const sectionList = [];
+
+const sectionList = {};
 
 /**
  * End Global Variables
@@ -31,16 +29,24 @@ const sectionList = [];
 /**
 * @description Get all sections for nav list
 * @method listSections
-* @returns {array} sectonList
+* @returns {Object} sectionList
 */
 const listSections = () => {
   const sections = document.querySelectorAll('section[id]');
-  
-  for (const section of sections){
-    sectionList.push(section.id);
-  }
-  return sectionList; // Return the list of section IDs
-}
+  const sectionList = {}; // Initialize the sectionList object
+
+  sections.forEach((section) => {
+    const sectionId = section.id;
+    const sectionName = section.querySelector('h2').textContent;
+
+    // Use the section ID as the key and the section name as the value
+    sectionList[sectionId] = sectionName;
+  });
+
+  console.log(sectionList); // Log the sectionList for debugging
+  return sectionList; // Return the sectionList object
+};
+
 
 /**
  * End Helper Functions
@@ -55,19 +61,24 @@ const listSections = () => {
  */
 const buildNavMenu = () => {
   const navList = document.getElementById('navbar__list');
-  const sections = listSections();
+  const sections = listSections(); // This now returns an object with { "sectionId": "Section Name" }
 
-  for (const section of sections) {
+  // Iterate over the entries (key-value pairs) in the sections object
+  for (const [sectionId, sectionName] of Object.entries(sections)) {
     let listItem = document.createElement('li');
     let anchorTag = document.createElement('a');
-    anchorTag.innerHTML = section.charAt(0).toUpperCase() + section.slice(1);
-    anchorTag.href = `#${section}`;
+    
+    // Set the anchor text and href attribute
+    anchorTag.innerHTML = sectionName;
+    anchorTag.href = `#${sectionId}`;
     anchorTag.classList.add('menu__link');
 
+    // Append the anchor tag to the list item, and the list item to the nav list
     listItem.appendChild(anchorTag);
     navList.appendChild(listItem);
   }
 }
+
 
 /**
 * @description Add class 'active' to section when near top of viewport
