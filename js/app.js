@@ -22,7 +22,9 @@
  * Define Global Variables
  * 
 */
-
+const sectionOne = document.getElementById('section1');
+const sectionTwo = document.getElementById('section2');
+const sectionThree = document.getElementById('section3');
 
 /**
  * End Global Variables
