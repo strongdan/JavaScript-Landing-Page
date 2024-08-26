@@ -20,6 +20,7 @@
 const sectionOne = document.getElementById('section1');
 const sectionTwo = document.getElementById('section2');
 const sectionThree = document.getElementById('section3');
+const sectionList = [];
 
 /**
  * End Global Variables
@@ -29,7 +30,7 @@ const sectionThree = document.getElementById('section3');
 
 const listSections = () => {
   const sections = document.querySelectorAll('section[id]');
-  const sectionList = [];
+  
 
   for (const section of sections){
     sectionList.push(section.id);
