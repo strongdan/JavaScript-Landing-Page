@@ -32,7 +32,16 @@ const sectionThree = document.getElementById('section3');
  * 
 */
 
+const listSections = () => {
 
+  const sections = document.querySelectorAll('section.id')
+  
+  const sectionList = [];
+
+  for (const section of sections){
+    sectionList.push(id);
+  }
+}
 
 /**
  * End Helper Functions
@@ -41,7 +50,21 @@ const sectionThree = document.getElementById('section3');
 */
 
 // build the nav
+const buildNavMenu = () => {
+  const navList = document.getElementById('navbar__list');
+  
+  const sections = listSections();
 
+  for (const section of sections){
+    let listItem = document.createElement('li');
+    let anchorTag = document.createElement('a');
+    anchorTag.setAttribute('href', `#${section}`);
+    anchorTag.textContent = section.charAt(0).toUpperCase() + section.slice(1);
+
+    listItem.appendChild(anchorTag);
+    navList.appendChild(listItem);
+  }
+}
 
 // Add class 'active' to section when near top of viewport
 const setActiveSection = () => {
@@ -73,6 +96,7 @@ const scrollToId = (ID) => {
 */
 
 // Build menu 
+window.onload.buildNavMenu();
 
 // Scroll to section on link click
 window.addEventListener('click', e => scrollToId);
