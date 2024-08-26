@@ -44,7 +44,20 @@ const sectionThree = document.getElementById('section3');
 
 
 // Add class 'active' to section when near top of viewport
+window.addEventListener('scroll', (e) => {
 
+  const sections = document.querySelectorAll('section');
+
+  sections.forEach( section => {
+      const topDistance = section.getBoundingClientRect().top;
+
+      if (topDistance > 0 && topDistance < 100){
+        section.classList.add('active');
+      } else {
+        section.classList.remove('active');
+      }
+  });
+}
 
 // Scroll to anchor ID using scrollTO event
 
