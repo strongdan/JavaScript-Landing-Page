@@ -14,11 +14,6 @@
 */
 
 /**
- * Comments should be present at the beginning of each procedure and class.
- * Great to have comments before crucial code sections within the procedure.
-*/
-
-/**
  * Define Global Variables
  * 
 */
@@ -33,14 +28,13 @@ const sectionThree = document.getElementById('section3');
 */
 
 const listSections = () => {
-
-  const sections = document.querySelectorAll('section.id')
-  
+  const sections = document.querySelectorAll('section[id]');
   const sectionList = [];
 
   for (const section of sections){
-    sectionList.push(id);
+    sectionList.push(section.id);
   }
+  return sectionList; // Return the list of section IDs
 }
 
 /**
@@ -49,7 +43,7 @@ const listSections = () => {
  * 
 */
 
-// build the nav
+// Build the navigation menu dynamically
 const buildNavMenu = () => {
   const navList = document.getElementById('navbar__list');
   
@@ -68,10 +62,9 @@ const buildNavMenu = () => {
 
 // Add class 'active' to section when near top of viewport
 const setActiveSection = () => {
-
   const sections = document.querySelectorAll('section');
 
-  sections.forEach( section => {
+  sections.forEach(section => {
       const topDistance = section.getBoundingClientRect().top;
 
       if (topDistance > 0 && topDistance < 100){
@@ -82,11 +75,11 @@ const setActiveSection = () => {
   });
 }
 
-// Scroll to anchor ID using scrollTO event
+// Scroll to anchor ID using scrollIntoView event
 const scrollToId = (ID) => {
   const section = document.getElementById(ID);
   
-  section.scrollIntoView();
+  section.scrollIntoView({ behavior: 'smooth' });
 }
 
 /**
@@ -95,12 +88,17 @@ const scrollToId = (ID) => {
  * 
 */
 
-// Build menu 
-window.onload.buildNavMenu();
+// Build menu when the page loads
+window.onload = buildNavMenu;
 
 // Scroll to section on link click
-window.addEventListener('click', e => scrollToId);
+document.getElementById('navbar__list').addEventListener('click', e => {
+  if (e.target.tagName === 'A') {
+    e.preventDefault(); // Prevent default anchor click behavior
+    const sectionID = e.target.getAttribute('href').substring(1); // Extract the section ID
+    scrollToId(sectionID);
+  }
+});
 
-// Set sections as active
-window.addEventListener('scroll', e => setActiveSection);
-
+// Set sections as active on scroll
+window.addEventListener('scroll', setActiveSection);
