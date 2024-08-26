@@ -49,20 +49,20 @@ const listSections = () => {
 */
 
 /**
-* @description Build the navigation menu dynamically
-* @method buildNavMenu
-* @returns null
-*/
+ * @description Build the navigation menu dynamically
+ * @method buildNavMenu
+ * @returns null
+ */
 const buildNavMenu = () => {
   const navList = document.getElementById('navbar__list');
-  
   const sections = listSections();
 
-  for (const section of sections){
+  for (const section of sections) {
     let listItem = document.createElement('li');
     let anchorTag = document.createElement('a');
-    anchorTag.setAttribute('href', `#${section}`);
-    anchorTag.textContent = section.charAt(0).toUpperCase() + section.slice(1);
+    anchorTag.innerHTML = section.charAt(0).toUpperCase() + section.slice(1);
+    anchorTag.href = `#${section}`;
+    anchorTag.classList.add('menu__link');
 
     listItem.appendChild(anchorTag);
     navList.appendChild(listItem);
