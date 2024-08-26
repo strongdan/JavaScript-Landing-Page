@@ -17,9 +17,9 @@
  * Define Global Variables
  * 
 */
-const sectionOne = document.getElementById('section1');
-const sectionTwo = document.getElementById('section2');
-const sectionThree = document.getElementById('section3');
+//const sectionOne = document.getElementById('section1');
+//const sectionTwo = document.getElementById('section2');
+//const sectionThree = document.getElementById('section3');
 const sectionList = [];
 
 /**
@@ -28,10 +28,14 @@ const sectionList = [];
  * 
 */
 
+/**
+* @description Get all sections for nav list
+* @method listSections
+* @returns {array} sectonList
+*/
 const listSections = () => {
   const sections = document.querySelectorAll('section[id]');
   
-
   for (const section of sections){
     sectionList.push(section.id);
   }
@@ -44,7 +48,11 @@ const listSections = () => {
  * 
 */
 
-// Build the navigation menu dynamically
+/**
+* @description Build the navigation menu dynamically
+* @method buildNavMenu
+* @returns null
+*/
 const buildNavMenu = () => {
   const navList = document.getElementById('navbar__list');
   
@@ -61,7 +69,11 @@ const buildNavMenu = () => {
   }
 }
 
-// Add class 'active' to section when near top of viewport
+/**
+* @description Add class 'active' to section when near top of viewport
+* @method setActiveSection
+* @returns null
+*/
 const setActiveSection = () => {
   const sections = document.querySelectorAll('section');
 
@@ -76,7 +88,11 @@ const setActiveSection = () => {
   });
 }
 
-// Scroll to anchor ID using scrollIntoView event
+/**
+* @description Scroll to anchor ID using scrollIntoView event
+* @method scrollToId
+* @returns null
+*/
 const scrollToId = (ID) => {
   const section = document.getElementById(ID);
   
