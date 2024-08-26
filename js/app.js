@@ -37,7 +37,7 @@ const listSections = () => {
 
   sections.forEach((section) => {
     const sectionId = section.id;
-    const sectionName = section.querySelector('h2').textContent;
+    const sectionName = section.getAttribute('data-nav');
 
     // Use the section ID as the key and the section name as the value
     sectionList[sectionId] = sectionName;
