@@ -44,7 +44,7 @@ const sectionThree = document.getElementById('section3');
 
 
 // Add class 'active' to section when near top of viewport
-window.addEventListener('scroll', (e) => {
+const setActiveSection = () => {
 
   const sections = document.querySelectorAll('section');
 
@@ -60,7 +60,11 @@ window.addEventListener('scroll', (e) => {
 }
 
 // Scroll to anchor ID using scrollTO event
-
+const scrollToId = (ID) => {
+  const section = document.getElementById(ID);
+  
+  section.scrollIntoView();
+}
 
 /**
  * End Main Functions
@@ -71,7 +75,8 @@ window.addEventListener('scroll', (e) => {
 // Build menu 
 
 // Scroll to section on link click
+window.addEventListener('click', e => scrollToId);
 
 // Set sections as active
-
+window.addEventListener('scroll', e => setActiveSection);
 
