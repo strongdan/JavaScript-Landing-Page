@@ -30,6 +30,11 @@ a {
   color: black;
 }
 
+a.active {
+  font-weight: bolder;
+  background-color: lightblue;
+}
+
 @media only screen and (min-width: 35em){
   h1 {
       font-size: 7em;

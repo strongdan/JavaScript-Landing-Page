@@ -71,10 +71,12 @@ const buildNavMenu = () => {
     anchorTag.innerHTML = sectionName;
     anchorTag.href = `#${sectionId}`;
     anchorTag.classList.add('menu__link');
+    anchorTag.id = `nav_${sectionId}`; // Assigning a unique ID
     listItem.appendChild(anchorTag);
     navList.appendChild(listItem);
   }
 };
+
 
 /**
  * @description Add class 'active' to section when near top of viewport
@@ -82,16 +84,31 @@ const buildNavMenu = () => {
  * @returns null
  */
 const setActiveSection = () => {
-  const sections = document.querySelectorAll('section');
-  sections.forEach(section => {
+  const sections = document.querySelectorAll('section[id]');
+
+  sections.forEach((section) => {
     const topDistance = section.getBoundingClientRect().top;
-    if (topDistance > 0 && topDistance < 150) {
+    const sectionId = section.id;
+    const navItem = document.getElementById(`nav_${sectionId}`);
+
+    if (topDistance >= 0 && topDistance < 150) {
+      // Add 'active' class to the section
       section.classList.add('active');
+
+      // Remove 'active' class from all other navbar items
+      document.querySelectorAll('#navbar__list li a').forEach(item => item.classList.remove('active'));
+
+      // Add 'active' class to the corresponding navbar item
+      if (navItem) {
+        navItem.classList.add('active');
+      }
     } else {
+      // Remove 'active' class from the section
       section.classList.remove('active');
     }
   });
 };
+
 
 /**
  * @description Scroll to anchor ID using scrollIntoView event
