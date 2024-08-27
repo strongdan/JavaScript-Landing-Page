@@ -11,7 +11,7 @@ const navbarList = document.querySelector('#navbar__list');
  */
 function addHamburger() {
   const hamburger = document.createElement('i');
-  hamburger.classList.add('fa-solid', 'fa-bars', 'hamburger');
+  hamburger.classList.add('fa', 'fa-solid', 'fa-bars');
   hamburger.setAttribute('aria-hidden', 'true');
   navbarMenu.insertBefore(hamburger, navbarList);
   hamburger.addEventListener('click', function () {
@@ -69,7 +69,7 @@ const buildNavMenu = () => {
     let listItem = document.createElement('li');
     let anchorTag = document.createElement('a');
     anchorTag.innerHTML = sectionName;
-    anchorTag.dataset.target = sectionId; // Set data attribute instead of href
+    anchorTag.dataset.target = sectionId;
     anchorTag.classList.add('menu__link');
     listItem.appendChild(anchorTag);
     navList.appendChild(listItem);
@@ -83,11 +83,18 @@ const buildNavMenu = () => {
  */
 const setActiveSection = () => {
   const sections = document.querySelectorAll('section');
-  sections.forEach(section => {
+  const navLinks = document.querySelectorAll('#navbar__list a');
+
+  sections.forEach((section, index) => {
     const topDistance = section.getBoundingClientRect().top;
     if (topDistance > 0 && topDistance < 150) {
+      // Set the section as active
       section.classList.add('active');
+      // Set the corresponding nav link as active
+      navLinks.forEach(link => link.classList.remove('active')); // Remove 'active' from all links
+      navLinks[index].classList.add('active'); // Add 'active' to the current link
     } else {
+      // Remove active class if section is not in view
       section.classList.remove('active');
     }
   });
