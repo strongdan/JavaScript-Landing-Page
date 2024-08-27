@@ -4,7 +4,7 @@
 ## Project Description
 JavaScript-based responsive landing page that dynamically renders navbar list and links to page sections. This is the final project for Udacity's Frontend Web Development Fundamentals nanodegree.
 
-Examples of alternative lorem ipsum text, including the following:
+This page provides examples of alternative lorem ipsum text, including the following:
 * [Pirate Ipsum](https://pirateipsum.me/)
 * [Zombie Ipsum](http://www.zombieipsum.com/)
 * [Bob Dylan Ipsum](https://brody.fyi/tools/dylan-ipsum)
