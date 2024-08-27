@@ -101,7 +101,7 @@ const setActiveSection = () => {
 const scrollToSection = (event) => {
   if (event.target.tagName === 'A') {
     event.preventDefault();
-    const sectionID = event.target.dataset.target; // Get the target section ID from data attribute
+    const sectionID = event.target.dataset.target;
     const section = document.getElementById(sectionID);
     section.scrollIntoView({ behavior: 'smooth' });
   }
