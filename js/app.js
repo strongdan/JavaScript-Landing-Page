@@ -58,7 +58,7 @@ const listSections = () => {
 };
 
 /**
- * @description Build the navigation menu dynamically
+ * @description Build the navigation menu dynamically using data-nav attributes
  * @method buildNavMenu
  * @returns null
  */
@@ -69,14 +69,12 @@ const buildNavMenu = () => {
     let listItem = document.createElement('li');
     let anchorTag = document.createElement('a');
     anchorTag.innerHTML = sectionName;
-    anchorTag.href = `#${sectionId}`;
+    anchorTag.dataset.target = sectionId; // Set data attribute instead of href
     anchorTag.classList.add('menu__link');
-    anchorTag.id = `nav_${sectionId}`; // Assigning a unique ID
     listItem.appendChild(anchorTag);
     navList.appendChild(listItem);
   }
 };
-
 
 /**
  * @description Add class 'active' to section when near top of viewport
@@ -84,40 +82,29 @@ const buildNavMenu = () => {
  * @returns null
  */
 const setActiveSection = () => {
-  const sections = document.querySelectorAll('section[id]');
-
-  sections.forEach((section) => {
+  const sections = document.querySelectorAll('section');
+  sections.forEach(section => {
     const topDistance = section.getBoundingClientRect().top;
-    const sectionId = section.id;
-    const navItem = document.getElementById(`nav_${sectionId}`);
-
-    if (topDistance >= 0 && topDistance < 150) {
-      // Add 'active' class to the section
+    if (topDistance > 0 && topDistance < 150) {
       section.classList.add('active');
-
-      // Remove 'active' class from all other navbar items
-      document.querySelectorAll('#navbar__list li a').forEach(item => item.classList.remove('active'));
-
-      // Add 'active' class to the corresponding navbar item
-      if (navItem) {
-        navItem.classList.add('active');
-      }
     } else {
-      // Remove 'active' class from the section
       section.classList.remove('active');
     }
   });
 };
 
-
 /**
- * @description Scroll to anchor ID using scrollIntoView event
- * @method scrollToId
+ * @description Scroll to section when clicking a nav link using the data attribute
+ * @method scrollToSection
  * @returns null
  */
-const scrollToId = (ID) => {
-  const section = document.getElementById(ID);
-  section.scrollIntoView({ behavior: 'smooth' });
+const scrollToSection = (event) => {
+  if (event.target.tagName === 'A') {
+    event.preventDefault();
+    const sectionID = event.target.dataset.target; // Get the target section ID from data attribute
+    const section = document.getElementById(sectionID);
+    section.scrollIntoView({ behavior: 'smooth' });
+  }
 };
 
 /**
@@ -130,14 +117,8 @@ window.onload = () => {
   handleResize();
 };
 
-// Scroll to section on link click
-document.getElementById('navbar__list').addEventListener('click', e => {
-  if (e.target.tagName === 'A') {
-    e.preventDefault();
-    const sectionID = e.target.getAttribute('href').substring(1);
-    scrollToId(sectionID);
-  }
-});
+// Scroll to section on link click using data attribute
+document.getElementById('navbar__list').addEventListener('click', scrollToSection);
 
 // Set sections as active on scroll
 window.addEventListener('scroll', setActiveSection);
